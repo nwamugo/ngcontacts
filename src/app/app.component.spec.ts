@@ -16,16 +16,24 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'ngcontacts'`, () => {
+  it(`should have a list of contacts`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ngcontacts');
+    expect(app.contacts).toBeDefined();
+    expect(app.contacts.length).toEqual(5);
   });
 
-  it('should render title', () => {
+  it('should render header', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('ngcontacts app is running!');
+    expect(compiled.querySelector('app-header')).toBeTruthy();
+  });
+
+  it('should render contact list', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-contact')).toBeTruthy();
   });
 });
