@@ -1,9 +1,18 @@
 <div class="table-responsive">
-  <table class="table table-striped" *ngIf="contacts">
+  <table class="table table-striped caption-top" *ngIf="contacts">
+    <caption>List of contacts</caption>
     <thead>
       <tr>
-        <th scope="col">First Name</th>
-        <th scope="col">Last Name</th>
+        <th scope="col" (click)="sortByFirstName()">
+          First Name
+          &nbsp;
+          <i class="bi bi-arrow-down-up"></i>
+        </th>
+        <th scope="col" (click)="sortByLastName()">
+          Last Name
+          &nbsp;
+          <i class="bi bi-arrow-down-up"></i>
+        </th>
         <th scope="col">Email</th>
         <th scope="col">Phone number</th>
       </tr>
