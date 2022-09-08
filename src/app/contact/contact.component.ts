@@ -7,7 +7,7 @@ import { Contact } from '../shared/models/contact.model';
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
-  @Input() contact: Contact | undefined;
+  @Input() contacts: Contact[] | undefined;
 
   constructor() { }
 
