@@ -8,6 +8,7 @@ import { Contact } from '../shared/models/contact.model';
 })
 export class ContactComponent implements OnInit {
   @Input() contacts: Contact[] | undefined;
+  filteredContacts: Contact[] | undefined;
   firstNameAscends = false;
   lastNameAscends = false;
 
@@ -15,50 +16,55 @@ export class ContactComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.filteredContacts = this.contacts;
   }
 
-  sortByFirstName(): Contact[] {
+  sortByFirstName(): void {
     this.lastNameAscends = false
     if (this.firstNameAscends) {
-      // sort in descending order
-      (this.contacts as Contact[]).sort((a: Contact, b: Contact) =>
-        a.firstName < b.firstName
-          ? 1
-          : -1
-      )
+      this.sortInDescendingOrder('firstName');
       this.firstNameAscends = false;
     } else {
-      // sort in ascending order
-      (this.contacts as Contact[]).sort((a: Contact, b: Contact) =>
-        a.firstName > b.firstName
-          ? 1
-          : -1
-      )
+      this.sortInAscendingOrder('firstName');
       this.firstNameAscends = true;
     }
-    return this.contacts as Contact[];
   }
 
-  sortByLastName(): Contact[] {
+  sortByLastName(): void {
     this.firstNameAscends = false
     if (this.lastNameAscends) {
-      // sort in descending order
-      (this.contacts as Contact[]).sort((a: Contact, b: Contact) =>
-        a.lastName < b.lastName
-          ? 1
-          : -1
-      )
+      this.sortInDescendingOrder('lastName');
       this.lastNameAscends = false;
     } else {
-      // sort in ascending order
-      (this.contacts as Contact[]).sort((a: Contact, b: Contact) =>
-        a.lastName > b.lastName
-          ? 1
-          : -1
-      )
+      this.sortInAscendingOrder('lastName');
       this.lastNameAscends = true;
     }
+  }
 
-    return this.contacts as Contact[];
+  filterByLastName(lastName: string): void {
+    this.filteredContacts = this.contacts?.filter(contact =>
+      contact.lastName.toLowerCase().indexOf(
+        lastName?.toLowerCase() ?? '') != -1
+    )
+  }
+
+  clearFilter(): void {
+    this.filteredContacts = this.contacts;
+  }
+
+  sortInDescendingOrder(field: string) {
+    (this.filteredContacts as Contact[]).sort((a: Contact, b: Contact) =>
+      a[field as keyof typeof a] < b[field as keyof typeof b]
+        ? 1
+        : -1
+    )
+  }
+
+  sortInAscendingOrder(field: string) {
+    (this.filteredContacts as Contact[]).sort((a: Contact, b: Contact) =>
+      a[field as keyof typeof a] > b[field as keyof typeof b]
+        ? 1
+        : -1
+    )
   }
 }

@@ -22,13 +22,18 @@ describe('ContactComponent', () => {
   });
 
   beforeEach(() => {
-    component.contacts = mockContacts
+    component.contacts = mockContacts;
+    component.ngOnInit();
     fixture.detectChanges();
   })
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should assign contacts to filterContacts on initializing', () => {
+    expect(component.filteredContacts).toEqual(component.contacts)
+  })
 
   it('should have a table', () => {
     const compiled = fixture.nativeElement as HTMLElement;
@@ -71,7 +76,7 @@ describe('ContactComponent', () => {
     expect(component.firstNameAscends)
       .withContext('sorted in ascending order')
       .toBe(true)
-    expect(component.contacts)
+    expect(component.filteredContacts)
       .withContext('sorted in ascending order')
       .toEqual(mockFirstNameSorted)
   });
@@ -87,7 +92,7 @@ describe('ContactComponent', () => {
     expect(component.firstNameAscends)
       .withContext('sorted in descending order')
       .toBe(false)
-    expect(component.contacts)
+    expect(component.filteredContacts)
       .withContext('sorted in descending order')
       .toEqual(mockFirstNameSortedReverse)
   });
@@ -103,7 +108,7 @@ describe('ContactComponent', () => {
     expect(component.lastNameAscends)
       .withContext('sorted in ascending order')
       .toBe(true)
-    expect(component.contacts)
+    expect(component.filteredContacts)
       .withContext('sorted in ascending order')
       .toEqual(mockLastNameSorted)
   });
@@ -119,8 +124,26 @@ describe('ContactComponent', () => {
     expect(component.lastNameAscends)
       .withContext('sorted in descending order')
       .toBe(false)
-    expect(component.contacts)
+    expect(component.filteredContacts)
       .withContext('sorted in descending order')
       .toEqual(mockLastNameSortedReverse)
   });
+
+  it('should render app-filter', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-filter')).toBeTruthy();
+  })
+
+  it('should filter contacts by Last Name', () => {
+    expect(component.filteredContacts?.length).withContext('Before filter action').toBe(4)
+    component.filterByLastName('h');
+    expect(component.filteredContacts?.length).withContext('After filter action').toBe(1)
+  })
+
+  it('should clear filter', () => {
+    component.filterByLastName('h');
+    expect(component.filteredContacts?.length).withContext('after filter action').toBe(1)
+    component.clearFilter();
+    expect(component.filteredContacts?.length).withContext('after clear filter').toBe(4)
+  })
 });

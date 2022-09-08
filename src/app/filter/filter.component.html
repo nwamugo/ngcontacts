@@ -1,0 +1,27 @@
+<div class="mb-3 mt-3 ms-2">
+  <label for="filter" class="form-label me-2">
+    Filter by Last Name
+  </label>
+  <input
+    #filterCtrl
+    (keydown.enter)="onFilter(filterCtrl.value)"
+    id="filter"
+  >
+  <button
+    type="button"
+    (click)="onFilter(filterCtrl.value)"
+  >
+    Filter
+    <i class="bi bi-funnel"></i>
+  </button>
+  <label for="clearbtn" class="form-label ms-2">
+    Clear Filter
+  </label>
+  <button
+    id="clearbtn"
+    type="button"
+    (click)="onClearFilter(filterCtrl)"
+  >
+    Clear Filter
+  </button>
+</div>
