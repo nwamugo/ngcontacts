@@ -20,11 +20,7 @@ describe('NewContactComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should render button with "Add contact" title', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('#addBtn')?.textContent).toContain('Add contact');
-  })
+  
   it(`button should have 'Add contact' label`, () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('label[for="addBtn"]')?.textContent).toContain('Add contact');
