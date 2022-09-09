@@ -146,4 +146,14 @@ describe('ContactComponent', () => {
     component.clearFilter();
     expect(component.filteredContacts?.length).withContext('after clear filter').toBe(4)
   })
+
+  it('should render app-new-contact', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-new-contact')).toBeTruthy();
+  })
+
+  it('should render app-toast', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-toast')).toBeTruthy();
+  })
 });

@@ -1,22 +1,39 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Contact } from '../shared/models/contact.model';
+import { ContactService } from './../shared/services/contact.service';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() contacts: Contact[] | undefined;
   filteredContacts: Contact[] | undefined;
   firstNameAscends = false;
   lastNameAscends = false;
+  destroy$ = new Subject<void>();
 
 
-  constructor() { }
+  constructor(private contactService: ContactService) { }
 
   ngOnInit(): void {
     this.filteredContacts = this.contacts;
+  }
+
+  ngAfterViewInit(): void {
+    this.contactService.onCreateContact
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((contact: Contact) => {
+      this.createContact(contact)
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   sortByFirstName(): void {
@@ -66,5 +83,9 @@ export class ContactComponent implements OnInit {
         ? 1
         : -1
     )
+  }
+
+  createContact(contact: Contact) {
+    this.contacts?.push(contact)
   }
 }

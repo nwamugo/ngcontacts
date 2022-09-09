@@ -1,33 +1,40 @@
-<app-filter
-  (filterAction)="filterByLastName($event)"
-  (filterCleared)="clearFilter()"
-></app-filter>
-<div class="table-responsive">
-  <table class="table table-striped caption-top" *ngIf="filteredContacts">
-    <caption>List of contacts</caption>
-    <thead>
-      <tr>
-        <th scope="col" (click)="sortByFirstName()">
-          First Name
-          &nbsp;
-          <i class="bi bi-arrow-down-up"></i>
-        </th>
-        <th scope="col" (click)="sortByLastName()">
-          Last Name
-          &nbsp;
-          <i class="bi bi-arrow-down-up"></i>
-        </th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone number</th>
-      </tr>
-    </thead>
-    <tbody class="table-group-divider">
-      <tr *ngFor="let contact of filteredContacts">
-        <td>{{ contact?.firstName }}</td>
-        <td>{{ contact?.lastName }}</td>
-        <td>{{ contact?.email }}</td>
-        <td>{{ contact?.phoneNumber }}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="p-md-4">
+  <div class="d-sm-flex justify-content-between">
+    <app-filter
+      (filterAction)="filterByLastName($event)"
+      (filterCleared)="clearFilter()"
+    ></app-filter>
+    <app-new-contact></app-new-contact>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped caption-top" *ngIf="filteredContacts">
+      <caption>List of contacts</caption>
+      <thead>
+        <tr>
+          <th scope="col" (click)="sortByFirstName()">
+            First Name
+            &nbsp;
+            <i class="bi bi-arrow-down-up"></i>
+          </th>
+          <th scope="col" (click)="sortByLastName()">
+            Last Name
+            &nbsp;
+            <i class="bi bi-arrow-down-up"></i>
+          </th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone number</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr *ngFor="let contact of filteredContacts">
+          <td>{{ contact?.firstName }}</td>
+          <td>{{ contact?.lastName }}</td>
+          <td>{{ contact?.email }}</td>
+          <td>{{ contact?.phoneNumber }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<app-toast></app-toast>
